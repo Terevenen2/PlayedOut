@@ -148,7 +148,7 @@ if os.path.exists(path_to_json):
                         #print(source['uuid'])
                 except Exception as e:
                     #print('Error :', e)
-                    1 + 1
+                    pass
             for source in data['sources']:
                 if source['id'] == 'scene' and source['uuid'] in uuids:
                     scenes_name += source['name']
@@ -159,7 +159,7 @@ if is_process_running("obs"):
 else:
     process = subprocess.Popen([
         "obs64.exe", "--minimize-to-tray", "--disable-shutdown-check", "--disable-updater",
-        "--scene", '"' + scenes_file[scenes_file.count()-1] + '"'],
+        "--scene", '"' + scenes_file[len(scenes_file)-1] + '"'],
         # --scene "League of legends automatic"
         cwd=r"C:\Program Files\obs-studio\bin\64bit",
         shell=True,
@@ -310,8 +310,8 @@ while True:
         data = json.load(file)
         riotIdGameName = data['activePlayer']['riotIdGameName']
         for event in data['events']['Events']:
-            if event['EventName'] in [
-                'ChampionKill']:  # firstblood, gamestart, minions spawn, game End, turret destroyed...
+            if event['EventName'] in ['ChampionKill']:
+                # firstblood, gamestart, minions spawn, game End, turret destroyed...
                 if event['KillerName'] == riotIdGameName or event['VictimName'] == riotIdGameName or riotIdGameName in \
                         event['Assisters']:
                     chapters += '[CHAPTER]\n'
